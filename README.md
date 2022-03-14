@@ -1,2 +1,0 @@
-# FacialRecognitionML
-Project Management
