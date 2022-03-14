@@ -11,7 +11,7 @@ with open("labels.pkl",'rb') as f:
     og_labels = pickle.load(f)
     labels = {v:k for k,v in og_labels.items()}
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 
 
 while True:
