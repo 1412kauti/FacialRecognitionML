@@ -1,9 +1,9 @@
 import sys
 from PyQt5.uic import loadUi
-# from PyQt5 import QtWidgets
-# from PyQt5.QtCore import pyqtSlot
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog
-# import resource
+import resource
 from Facial import Ui_OutputDialog
 
 
@@ -12,29 +12,29 @@ class Attendance(QDialog):
         super(Attendance, self).__init__()
         loadUi("outputwindow.ui")
         self._new_window = None
-        self.video_capture = None
-        self.run_slot()
+        self.Videocapture_ = None
+        self.runSlot()
 
-    def refresh_all(self):
+    def refreshAll(self):
         """
         Set the text of lineEdit once it's valid
         """
-        self.video_capture = "0"
+        self.Videocapture_ = "0"
 
-    def run_slot(self):
+    def runSlot(self):
         """
         Called when the user presses the Run button
         """
-        self.refresh_all()
-        self.output_window()  # Create and open new output window
+        self.refreshAll()
+        self.outputWindow_()  # Create and open new output window
 
-    def output_window(self):
+    def outputWindow_(self):
         """
         Created new window for vidual output of the video in GUI
         """
         self._new_window = Ui_OutputDialog()
         self._new_window.show()
-        self._new_window.start_video(self.video_capture)
+        self._new_window.startVideo(self.Videocapture_)
 
 
 if __name__ == "__main__":
