@@ -115,8 +115,10 @@ class Ui_OutputDialog(QDialog):
                 if not self.run_once:
                     insert_val.insert_values(name, dtString)
                     self.run_once = True
-                    self.Result_Label.setText('<font color="green">Attendance Recorded !</font>')
-
+                    # self.Result_Label.setText('<font color="green">Attendance Recorded !</font>')
+                    self.Result_Label.setStyleSheet("background-color: green")
+                
+                
                 y1, x2, y2, x1 = faceLoc
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
                 cv2.rectangle(frame, (x1, y2 - 20), (x2, y2), (0, 255, 0), cv2.FILLED)
@@ -131,6 +133,8 @@ class Ui_OutputDialog(QDialog):
 
                     if name not in nameList:
                         f.writelines(f'\n{name},{dtString}')
+            else:
+                    self.Result_Label.setStyleSheet("background-color: red")
 
         return frame
 

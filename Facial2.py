@@ -57,11 +57,25 @@ class Ui_OutputDialog(QDialog):
 
     @pyqtSlot()
     def startVideo(self, camera_name):
-        pass
+        if len(camera_name) == 1:
+            self.capture = cv2.VideoCapture(int(camera_name))
+        else:
+            self.capture = cv2.VideoCapture(camera_name)
 
     def get_class_names(self):
-        
-        if not os.path.exists(path):
-            os.mkdir(path)
-        attendance_list = os.listdir(path)
+        if not os.path.exists(self.path):
+            os.mkdir(self.path)
+        self.attendance_list = os.listdir(self.path)
+        for cl in self.attendance_listattendance_list:
+            cur_img = cv2.imread(f'{self.path}/{cl}')
+            self.images.append(cur_img)
+            self.class_names.append(os.path.splitext(cl)[0])
+
+    def get_encode_list(self):
+        for img in self.images:
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            boxes = face_recognition.face_locations(img)
+            encodes_cur_frame = face_recognition.face_encodings(img, boxes)[0]
+            # encode = face_recognition.face_encodings(img)[0]
+            self.encode_list.append(encodes_cur_frame)
         
