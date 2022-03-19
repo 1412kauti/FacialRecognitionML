@@ -1,3 +1,4 @@
+import threading
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot, QTimer, QDate, Qt
@@ -24,7 +25,28 @@ class Ui_OutputDialog(QDialog):
         current_time = datetime.datetime.now().strftime("%I:%M %p")
         self.Date_Label.setText(current_date)
         self.Time_Label.setText(current_time)
+        self.themeComboBox.activated[str].connect(self.comboBoxClicked)
         self.image = None
+        x = threading.Thread(target=self.load_qss)
+        x.start()
+
+    
+    def load_qss(self):
+        dummy=[]
+        qss_path = 'QSS'
+        qss_list = os.listdir(qss_path)
+        for theme in qss_list:
+            dummy.append(os.path.splitext(theme)[0])
+            self.themeComboBox.addItem(os.path.splitext(theme)[0])
+
+    def comboBoxClicked(self,val):
+        qss_path = 'QSS/'
+        theme_name = self.themeComboBox.currentText()
+        theme_file_name = qss_path + str(theme_name)+(".qss")
+        with open(theme_file_name, "r") as fh:
+            self.setStyleSheet(fh.read())
+
+
 
     @pyqtSlot()
     def startVideo(self, camera_name):
