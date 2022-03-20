@@ -6,17 +6,22 @@ from PyQt5.QtCore import pyqtSlot,QThread,pyqtSignal
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtGui import QImage
 import resource
-from Facial import Ui_OutputDialog
+from Facial2 import Ui_OutputDialog
 import time
-
-camcode = 2
+import configparser
 
 class Attendance(QDialog):
-
+    
     def __init__(self):
-        startt = time.time()
         super(Attendance, self).__init__()
         loadUi("outputwindow.ui")
+        self.ui = Ui_OutputDialog()
+
+        Thread_init1 = threading.Thread(target=self.ui.get_class_names())
+        Thread_init2 = threading.Thread(target=self.ui.get_encode_list())
+        Thread_init1.start()
+        Thread_init2.start()
+
         self._new_window = None
         self.Videocapture_ = None
 
@@ -32,15 +37,23 @@ class Attendance(QDialog):
         self.Videocapture_ = val
         self._new_window = Ui_OutputDialog()
         self._new_window.show()
+        print("showing")
     
     def func1(self,val):
         self._new_window.startVideo(val)
-        pass
+        print("starting video")
+
+    def func2(self,val):
+        self._new_window.update_frame(val)
 
 class Worker1(QThread):
+    config = configparser.RawConfigParser()   
+    config.read('camconfig.txt') 
+    camcode = config.get('cam-config','camcode')
+    
     camera_name = pyqtSignal(str)
     def run(self):
-        self.camera_name.emit(str(camcode))
+        self.camera_name.emit(str(self.camcode))
     
     def stop(self):
         self.quit()
