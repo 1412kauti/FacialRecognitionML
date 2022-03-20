@@ -36,6 +36,8 @@ class Admin(QDialog):
         with open(theme_file_name, "r") as fh:
             self.setStyleSheet(fh.read())
 
+    
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ui = Admin()
