@@ -1,8 +1,5 @@
 <RCC>
-  <qresource prefix="logo">
-    <file>logo.png</file>
-  </qresource>
-  <qresource prefix="icon">
-    <file>icon.png</file>
+  <qresource prefix="Themes">
+    <file>OrangeDark.qss</file>
   </qresource>
 </RCC>
