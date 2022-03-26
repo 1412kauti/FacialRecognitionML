@@ -23,8 +23,8 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="1">
-       <widget class="QTabWidget" name="tabWidget">
+      <item row="0" column="1">
+       <widget class="QTabWidget" name="Table_View">
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -34,7 +34,7 @@
          </attribute>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="1" column="0">
-           <widget class="QFrame" name="frame_2">
+           <widget class="QFrame" name="CamView_Frame">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -49,7 +49,14 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
+             <item row="1" column="1">
+              <widget class="QPushButton" name="Upload_Button">
+               <property name="text">
+                <string>Upload</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="Camera_View">
                <property name="autoFillBackground">
                 <bool>true</bool>
@@ -82,22 +89,8 @@
              <layout class="QGridLayout" name="gridLayout_5">
               <item row="1" column="0">
                <layout class="QGridLayout" name="gridLayout_4">
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_2">
-                  <property name="text">
-                   <string>Adress:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Role:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QLineEdit" name="lineEdit_3">
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="Name_Line">
                   <property name="maximumSize">
                    <size>
                     <width>350</width>
@@ -106,8 +99,15 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="lineEdit_2">
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_2">
+                  <property name="text">
+                   <string>Adress:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="Role_Line">
                   <property name="maximumSize">
                    <size>
                     <width>350</width>
@@ -124,7 +124,7 @@
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QLineEdit" name="lineEdit">
+                 <widget class="QLineEdit" name="Adress_Line">
                   <property name="maximumSize">
                    <size>
                     <width>350</width>
@@ -133,12 +133,19 @@
                   </property>
                  </widget>
                 </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_4">
+                  <property name="text">
+                   <string>Role:</string>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </item>
               <item row="2" column="0">
                <widget class="QPushButton" name="Register_Button">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -166,7 +173,36 @@
          </attribute>
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="0" column="0">
-           <widget class="QTableView" name="Users_Table_View"/>
+           <widget class="QTableWidget" name="Users_View">
+            <property name="rowCount">
+             <number>7</number>
+            </property>
+            <property name="columnCount">
+             <number>3</number>
+            </property>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <column>
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Adress</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Role</string>
+             </property>
+            </column>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -176,7 +212,26 @@
          </attribute>
          <layout class="QGridLayout" name="gridLayout_7">
           <item row="0" column="0">
-           <widget class="QTableView" name="Entries_Table_View"/>
+           <widget class="QTableWidget" name="Entries_View">
+            <property name="rowCount">
+             <number>10</number>
+            </property>
+            <property name="columnCount">
+             <number>2</number>
+            </property>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <column/>
+            <column/>
+           </widget>
           </item>
          </layout>
         </widget>

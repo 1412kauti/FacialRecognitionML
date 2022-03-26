@@ -1,2 +1,2 @@
 [cam-config]
-camcode = 2
+camcode = 0
