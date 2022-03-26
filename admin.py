@@ -28,7 +28,7 @@ class Admin(QDialog):
 
         config = configparser.RawConfigParser()   
         config.read('camconfig.txt') 
-        camcode = config.get('cam-config','camcode')
+        self.camcode = config.get('cam-config','admin_cam')
         
 
         self.Register_Button.clicked.connect(self.reg)
@@ -92,7 +92,7 @@ class Admin(QDialog):
         self.Worker1.stop()
     
     def get_image(self):
-        self.Capture = cv2.VideoCapture(0)
+        self.Capture = cv2.VideoCapture(int(self.camcode))
         retval, im  = self.Capture.read()
         return im
     
@@ -156,9 +156,9 @@ class Worker1(QThread):
     def run(self):
         config = configparser.RawConfigParser()   
         config.read('camconfig.txt') 
-        camcode = config.get('cam-config','camcode')
+        self.camcode = config.get('cam-config','admin_cam')
         self.ThreadActive = True
-        Capture = cv2.VideoCapture(0)
+        Capture = cv2.VideoCapture(int(self.camcode))
         while self.ThreadActive:
             ret, frame = Capture.read()
             if ret:
