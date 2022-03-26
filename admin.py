@@ -25,17 +25,14 @@ class Admin(QDialog):
         loadUi("./admin.ui", self)
         self.load_users()
         self.load_entries()
-        
+
         config = configparser.RawConfigParser()   
         config.read('camconfig.txt') 
         camcode = config.get('cam-config','camcode')
         
 
         self.Register_Button.clicked.connect(self.reg)
-
         self.Upload_Button.clicked.connect(self.open)
-
-
         self.Capture_Button.clicked.connect(self.save_image)
 
 
@@ -43,11 +40,17 @@ class Admin(QDialog):
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
 
-        self.Capture = cv2.VideoCapture(camcode)
-
         self.comboBox.activated[str].connect(self.comboBoxClicked)
         self.Thread_init3 = threading.Thread(target=self.load_qss)
         self.Thread_init3.start()
+
+        self.Capture_Button.setEnabled(False)
+        self.Upload_Button.setEnabled(False)
+        self.Register_Button.setEnabled(False)
+        self.Adress_Line.setEnabled(False)
+        self.Role_Line.setEnabled(False)
+
+        self.Name_Line.textChanged.connect(self.enable_Buttons)
 
         self.show()
         
@@ -74,6 +77,13 @@ class Admin(QDialog):
         image_root,imageName = os.path.split(str(filePath[0]))
         imagePath = 'ImagesAttendance/'
         shutil.copyfile(filePath[0],imagePath+imageName)
+        self.Adress_Line.setEnabled(True)
+        self.Role_Line.setEnabled(True)
+        self.Register_Button.setEnabled(True)
+
+    def enable_Buttons(self):
+        self.Capture_Button.setEnabled(True)
+        self.Upload_Button.setEnabled(True)
     
     def ImageUpdateSlot(self, Image):
         self.Camera_View.setPixmap(QPixmap.fromImage(Image))
@@ -82,6 +92,7 @@ class Admin(QDialog):
         self.Worker1.stop()
     
     def get_image(self):
+        self.Capture = cv2.VideoCapture(0)
         retval, im  = self.Capture.read()
         return im
     
@@ -90,6 +101,9 @@ class Admin(QDialog):
         file = str(self.Name_Line.text())+".png"
         path = os.path.abspath(os.getcwd())+"/ImagesAttendance/"
         cv2.imwrite(path+file,camera_capture)
+        self.Adress_Line.setEnabled(True)
+        self.Role_Line.setEnabled(True)
+        self.Register_Button.setEnabled(True)
 
 
 
@@ -102,6 +116,11 @@ class Admin(QDialog):
         connection.commit()
         
         self.load_users()
+        self.Capture_Button.setEnabled(False)
+        self.Upload_Button.setEnabled(False)
+        self.Register_Button.setEnabled(False)
+        self.Adress_Line.setEnabled(False)
+        self.Role_Line.setEnabled(False)
 
 
     def load_users(self):
@@ -139,7 +158,7 @@ class Worker1(QThread):
         config.read('camconfig.txt') 
         camcode = config.get('cam-config','camcode')
         self.ThreadActive = True
-        Capture = cv2.VideoCapture(camcode)
+        Capture = cv2.VideoCapture(0)
         while self.ThreadActive:
             ret, frame = Capture.read()
             if ret:
