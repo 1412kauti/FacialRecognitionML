@@ -6,7 +6,7 @@ from PyQt5.QtCore import pyqtSlot,QThread,pyqtSignal
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtGui import QImage
 import resource
-from Facial import Ui_OutputDialog
+from Facial2 import Ui_OutputDialog
 import time
 import configparser
 
@@ -16,6 +16,11 @@ class Attendance(QDialog):
         super(Attendance, self).__init__()
         loadUi("outputwindow.ui")
         self.ui = Ui_OutputDialog()
+
+        Thread_init1 = threading.Thread(target=self.ui.get_class_names())
+        Thread_init2 = threading.Thread(target=self.ui.get_encode_list())
+        Thread_init1.start()
+        Thread_init2.start()
 
         self._new_window = None
         self.Videocapture_ = None

@@ -1,2 +1,3 @@
 [cam-config]
-camcode = 2
+camcode = 0
+admin_cam = 0
