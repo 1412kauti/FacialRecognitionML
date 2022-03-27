@@ -5,7 +5,7 @@ import threading
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import pyqtSlot,QThread,pyqtSignal,Qt
-from PyQt5.QtWidgets import QApplication, QDialog,QFileDialog
+from PyQt5.QtWidgets import QApplication, QDialog,QFileDialog,QMessageBox
 from PyQt5.QtGui import QImage,QPixmap
 import cv2
 import resource
@@ -70,20 +70,33 @@ class Admin(QDialog):
             self.setStyleSheet(fh.read())
     
     def open(self):
-        filePath = QFileDialog.getOpenFileName(self, 'OpenFile')
-        pixmap = QPixmap(str(filePath[0]))
-        pixmap = pixmap.scaled(270, 405, Qt.KeepAspectRatio)
-        self.Camera_View.setPixmap(pixmap)
-        image_root,imageName = os.path.split(str(filePath[0]))
-        imagePath = 'ImagesAttendance/'
-        shutil.copyfile(filePath[0],imagePath+imageName)
-        self.Adress_Line.setEnabled(True)
-        self.Role_Line.setEnabled(True)
-        self.Register_Button.setEnabled(True)
+        if self.Name_Line.text() == '':
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Critical)
+            self.msg.setText("Name Field cannot be empty !")
+            self.msg.exec_()
+        else:
+            filePath = QFileDialog.getOpenFileName(self, 'OpenFile')
+            if filePath[0] == '':
+                pass
+            else:
+                pixmap = QPixmap(str(filePath[0]))
+                pixmap = pixmap.scaled(270, 405, Qt.KeepAspectRatio)
+                self.ui = loadUi("preview.ui")
+                self.ui.Image_preview.setPixmap(pixmap)
+                self.ui.show()
+                # self.Camera_View.setPixmap(pixmap)
+                image_root,imageName = os.path.split(str(filePath[0]))
+                imagePath = 'ImagesAttendance/'
+                shutil.copyfile(filePath[0],imagePath+imageName)
+                self.Adress_Line.setEnabled(True)
+                self.Role_Line.setEnabled(True)
+                self.Register_Button.setEnabled(True)
+
 
     def enable_Buttons(self):
-        self.Capture_Button.setEnabled(True)
-        self.Upload_Button.setEnabled(True)
+            self.Capture_Button.setEnabled(True)
+            self.Upload_Button.setEnabled(True)
     
     def ImageUpdateSlot(self, Image):
         self.Camera_View.setPixmap(QPixmap.fromImage(Image))
@@ -97,30 +110,42 @@ class Admin(QDialog):
         return im
     
     def save_image(self):
-        camera_capture = self.get_image()
-        file = str(self.Name_Line.text())+".png"
-        path = os.path.abspath(os.getcwd())+"/ImagesAttendance/"
-        cv2.imwrite(path+file,camera_capture)
-        self.Adress_Line.setEnabled(True)
-        self.Role_Line.setEnabled(True)
-        self.Register_Button.setEnabled(True)
+        if self.Name_Line.text() == '':
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Critical)
+            self.msg.setText("Name Field cannot be empty !")
+            self.msg.exec_()
+        else:
+            camera_capture = self.get_image()
+            file = str(self.Name_Line.text())+".png"
+            path = os.path.abspath(os.getcwd())+"/ImagesAttendance/"
+            cv2.imwrite(path+file,camera_capture)
+            self.Adress_Line.setEnabled(True)
+            self.Role_Line.setEnabled(True)
+            self.Register_Button.setEnabled(True)
 
 
 
     @pyqtSlot()
     def reg(self):
-        connection = sqlite3.connect("database.db")  
-        cursor = connection.cursor()
-        query = "INSERT INTO users (name,adress,role) VALUES('{}','{}','{}')"
-        cursor.execute(query.format(self.Name_Line.text(),self.Adress_Line.text(),self.Role_Line.text()))
-        connection.commit()
-        
-        self.load_users()
-        self.Capture_Button.setEnabled(False)
-        self.Upload_Button.setEnabled(False)
-        self.Register_Button.setEnabled(False)
-        self.Adress_Line.setEnabled(False)
-        self.Role_Line.setEnabled(False)
+        if self.Adress_Line.text() == '' or self.Role_Line.text() == ''or self.Name_Line.text() == '':
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Critical)
+            self.msg.setText("Kindly Fill in all the Fields !")
+            self.msg.exec_()
+        else:
+            connection = sqlite3.connect("database.db")  
+            cursor = connection.cursor()
+            query = "INSERT INTO users (name,adress,role) VALUES('{}','{}','{}')"
+            cursor.execute(query.format(self.Name_Line.text(),self.Adress_Line.text(),self.Role_Line.text()))
+            connection.commit()
+            
+            self.load_users()
+            self.Capture_Button.setEnabled(False)
+            self.Upload_Button.setEnabled(False)
+            self.Register_Button.setEnabled(False)
+            self.Adress_Line.setEnabled(False)
+            self.Role_Line.setEnabled(False)
 
 
     def load_users(self):

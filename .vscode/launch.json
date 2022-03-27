@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Starter",
+            "name": "Python: Admin",
             "type": "python",
             "request": "launch",
             "program": "admin.py",
