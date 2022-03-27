@@ -16,6 +16,7 @@ class Attendance(QDialog):
         super(Attendance, self).__init__()
         loadUi("outputwindow.ui")
         self.ui = Ui_OutputDialog()
+        self.ui.setWindowTitle("Face Recognition")
 
         self._new_window = None
         self.Videocapture_ = None

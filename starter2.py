@@ -16,6 +16,7 @@ class Attendance(QDialog):
         super(Attendance, self).__init__()
         loadUi("outputwindow.ui")
         self.ui = Ui_OutputDialog()
+        self.ui.setWindowTitle("Face Recognition")
 
         Thread_init1 = threading.Thread(target=self.ui.get_class_names())
         Thread_init2 = threading.Thread(target=self.ui.get_encode_list())

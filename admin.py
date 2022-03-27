@@ -25,6 +25,8 @@ class Admin(QDialog):
         loadUi("./admin.ui", self)
         self.load_users()
         self.load_entries()
+        
+        self.setWindowTitle("Register")
 
         config = configparser.RawConfigParser()   
         config.read('camconfig.txt') 
@@ -76,7 +78,7 @@ class Admin(QDialog):
             self.msg.setText("Name Field cannot be empty !")
             self.msg.exec_()
         else:
-            filePath = QFileDialog.getOpenFileName(self, 'OpenFile')
+            filePath = QFileDialog.getOpenFileName(self, "Open File","","Image files (*.png *.jpeg *.jpg)")
             if filePath[0] == '':
                 pass
             else:
