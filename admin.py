@@ -125,6 +125,11 @@ class Admin(QDialog):
             self.Adress_Line.setEnabled(True)
             self.Role_Line.setEnabled(True)
             self.Register_Button.setEnabled(True)
+            pixmap = QPixmap(path+file)
+            pixmap = pixmap.scaled(270, 405, Qt.KeepAspectRatio)
+            self.ui = loadUi("preview.ui")
+            self.ui.Image_preview.setPixmap(pixmap)
+            self.ui.show()
 
 
 
