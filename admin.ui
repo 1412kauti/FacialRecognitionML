@@ -174,6 +174,9 @@
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="0" column="0">
            <widget class="QTableWidget" name="Users_View">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
             <property name="rowCount">
              <number>7</number>
             </property>
@@ -213,11 +216,20 @@
          <layout class="QGridLayout" name="gridLayout_7">
           <item row="0" column="0">
            <widget class="QTableWidget" name="Entries_View">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::SolidLine</enum>
+            </property>
+            <property name="sortingEnabled">
+             <bool>false</bool>
+            </property>
             <property name="rowCount">
              <number>10</number>
             </property>
             <property name="columnCount">
-             <number>2</number>
+             <number>3</number>
             </property>
             <row/>
             <row/>
@@ -229,8 +241,21 @@
             <row/>
             <row/>
             <row/>
-            <column/>
-            <column/>
+            <column>
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Clock In Time</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Date</string>
+             </property>
+            </column>
            </widget>
           </item>
          </layout>

@@ -10,6 +10,7 @@ import datetime
 import os
 import csv
 import sqlite3
+from datetime import date
 
 
 class Ui_OutputDialog(QDialog):
@@ -111,9 +112,10 @@ class Ui_OutputDialog(QDialog):
                 name = class_names[best_match_index].upper()
                 now = datetime.datetime.now()
                 dtString = now.strftime('%H:%M:%S')
+                dtDate = str(date.today())
 
                 if not self.run_once:
-                    insert_val.insert_values(name, dtString)
+                    insert_val.insert_values(name, dtString,dtDate)
                     self.run_once = True
                     # self.Result_Label.setText('<font color="green">Attendance Recorded !</font>')
                     self.Result_Label.setStyleSheet("background-color: green")
@@ -138,14 +140,14 @@ class Ui_OutputDialog(QDialog):
 
         return frame
 
-    def insert_values(self, name, dtString):
+    def insert_values(self, name, dtString,dtDate):
 
         try:
             sqliteConnection = sqlite3.connect('database.db')
             cursor = sqliteConnection.cursor()
             print("Successfully Connected to SQLite")
 
-            cursor.execute("INSERT INTO Entries (user_name,date_time) VALUES(?, ?)", (name, dtString))
+            cursor.execute("INSERT INTO Entries (user_name,date_time,date_date) VALUES(?, ?, ?)", (name, dtString,dtDate))
 
             sqliteConnection.commit()
 

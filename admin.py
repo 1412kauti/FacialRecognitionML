@@ -153,6 +153,10 @@ class Admin(QDialog):
             self.Register_Button.setEnabled(False)
             self.Adress_Line.setEnabled(False)
             self.Role_Line.setEnabled(False)
+            self.Name_Line.setText("")
+            self.Adress_Line.setText("")
+            self.Role_Line.setText("")
+            
 
 
     def load_users(self):
@@ -171,7 +175,7 @@ class Admin(QDialog):
        
     def load_entries(self):
         connection = sqlite3.connect("database.db")
-        query = "SELECT user_name,date_time FROM entries"
+        query = "SELECT user_name,date_time,date_date FROM entries"
         result = connection.execute(query)
 
         self.Entries_View.setRowCount(0)
