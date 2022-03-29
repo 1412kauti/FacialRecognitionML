@@ -13,6 +13,11 @@ import configparser
 class Attendance(QDialog):
     
     def __init__(self):
+
+        config = configparser.RawConfigParser()   
+        config.read('camconfig.txt') 
+        camcode = config.get('cam-config','camcode')
+        
         super(Attendance, self).__init__()
         loadUi("outputwindow.ui")
         self.ui = Ui_OutputDialog()

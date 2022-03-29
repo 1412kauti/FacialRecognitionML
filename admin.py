@@ -148,6 +148,10 @@ class Admin(QDialog):
             connection.commit()
             
             self.load_users()
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText("Registration Successfull")
+            self.msg.exec_()
             self.Capture_Button.setEnabled(False)
             self.Upload_Button.setEnabled(False)
             self.Register_Button.setEnabled(False)
