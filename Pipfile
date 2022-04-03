@@ -7,6 +7,7 @@ name = "pypi"
 numpy = "*"
 pyqt5 = "*"
 face-recognition = "*"
+opencv-python = "*"
 
 [dev-packages]
 
