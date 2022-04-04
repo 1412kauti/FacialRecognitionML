@@ -52,6 +52,9 @@ class Admin(QDialog):
 
         self.Name_Line.textChanged.connect(self.enable_Buttons)
 
+        self.DeleteUser_btn.clicked.connect(self.delete_user)
+        self.EditUser_btn.clicked.connect(self.update_user)
+
         self.show()
 
     def load_qss(self):
@@ -200,6 +203,74 @@ class Admin(QDialog):
             for column_number, data in enumerate(row_data):
                 self.Entries_View.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
         connection.close()
+    
+    def delete_user(self):
+        selected_username = str(self.Name_edit_LineEdit.text())
+        if selected_username == "":
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText("Name Field cannot be empty")
+            self.msg.exec_()
+        else:
+            connection = sqlite3.connect("database.db")
+            exist = connection.execute("SELECT 1 FROM users WHERE name= ?",(selected_username,)).fetchone()
+            if exist is None:
+                self.msg = QMessageBox()
+                self.msg.setIcon(QMessageBox.Critical)
+                self.msg.setText("User Does not exist")
+                self.msg.exec_()
+            else:
+                query = "DELETE FROM users WHERE name = '%s';"%selected_username.strip()
+                connection.execute(query)
+                connection.commit()
+                connection.close()
+                self.msg = QMessageBox()
+                self.msg.setIcon(QMessageBox.Information)
+                self.msg.setText("Deleted User")
+                self.msg.exec_()
+                self.load_users()
+    
+    def update_user(self):
+        selected_username = str(self.Name_edit_LineEdit.text())
+        selected_user_address = str(self.Adress_edit_LineEdit.text())
+        selected_user_role = str(self.Role_edit_LineEdit.text())
+
+        if selected_username == "":
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText("Name Field cannot be empty")
+            self.msg.exec_()
+        else:
+            if selected_user_address == "":
+                self.msg = QMessageBox()
+                self.msg.setIcon(QMessageBox.Information)
+                self.msg.setText("Address Field cannot be empty")
+                self.msg.exec_()
+            else:
+                if selected_user_role == "":
+                    self.msg = QMessageBox()
+                    self.msg.setIcon(QMessageBox.Information)
+                    self.msg.setText("Role Field cannot be empty")
+                    self.msg.exec_()
+                else:
+                    connection = sqlite3.connect("database.db")
+                    exist = connection.execute("SELECT 1 FROM users WHERE name= ?",(selected_username,)).fetchone()
+                    if exist is None:
+                        self.msg = QMessageBox()
+                        self.msg.setIcon(QMessageBox.Critical)
+                        self.msg.setText("User Does not exist")
+                        self.msg.exec_()
+                    else:
+                        query = "UPDATE users SET adress = ? ,role = ? WHERE name = ? ;"
+                        val = (selected_user_address,selected_user_role,selected_username)
+                        connection.execute(query,val)
+                        connection.commit()
+                        connection.close()
+                        self.msg = QMessageBox()
+                        self.msg.setIcon(QMessageBox.Information)
+                        self.msg.setText("Updated User")
+                        self.msg.exec_()
+                        self.load_users()
 
 
 class Worker1(QThread):
