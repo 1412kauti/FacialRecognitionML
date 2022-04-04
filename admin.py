@@ -17,7 +17,6 @@ import shutil
 
 
 class Admin(QDialog):
-    age = 0
 
     def __init__(self):
         super(Admin, self).__init__()
