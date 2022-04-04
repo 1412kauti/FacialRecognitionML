@@ -3,7 +3,7 @@ import sqlite3
 import sys
 import threading
 from PyQt5.uic import loadUi
-from PyQt5 import QtWidgets     # QtCore, QtGui
+from PyQt5 import QtWidgets  # QtCore, QtGui
 from PyQt5.QtCore import pyqtSlot, QThread, pyqtSignal, Qt
 from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox
 from PyQt5.QtGui import QImage, QPixmap
@@ -203,7 +203,7 @@ class Admin(QDialog):
             for column_number, data in enumerate(row_data):
                 self.Entries_View.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
         connection.close()
-    
+
     def delete_user(self):
         selected_username = str(self.Name_edit_LineEdit.text())
         if selected_username == "":
@@ -213,23 +213,26 @@ class Admin(QDialog):
             self.msg.exec_()
         else:
             connection = sqlite3.connect("database.db")
-            exist = connection.execute("SELECT 1 FROM users WHERE name= ?",(selected_username,)).fetchone()
+            # noinspection SqlDialectInspection,SqlNoDataSourceInspection
+            exist = connection.execute("SELECT 1 FROM users WHERE name= ?", (selected_username,)).fetchone()
             if exist is None:
                 self.msg = QMessageBox()
                 self.msg.setIcon(QMessageBox.Critical)
                 self.msg.setText("User Does not exist")
                 self.msg.exec_()
             else:
-                query = "DELETE FROM users WHERE name = '%s';"%selected_username.strip()
+                # noinspection SqlDialectInspection,SqlNoDataSourceInspection
+                query = "DELETE FROM users WHERE name = '%s';" % selected_username.strip()
                 connection.execute(query)
                 connection.commit()
                 connection.close()
+                # noinspection PyAttributeOutsideInit
                 self.msg = QMessageBox()
                 self.msg.setIcon(QMessageBox.Information)
                 self.msg.setText("Deleted User")
                 self.msg.exec_()
                 self.load_users()
-    
+
     def update_user(self):
         selected_username = str(self.Name_edit_LineEdit.text())
         selected_user_address = str(self.Adress_edit_LineEdit.text())
@@ -254,18 +257,21 @@ class Admin(QDialog):
                     self.msg.exec_()
                 else:
                     connection = sqlite3.connect("database.db")
-                    exist = connection.execute("SELECT 1 FROM users WHERE name= ?",(selected_username,)).fetchone()
+                    # noinspection SqlDialectInspection,SqlNoDataSourceInspection
+                    exist = connection.execute("SELECT 1 FROM users WHERE name= ?", (selected_username,)).fetchone()
                     if exist is None:
                         self.msg = QMessageBox()
                         self.msg.setIcon(QMessageBox.Critical)
                         self.msg.setText("User Does not exist")
                         self.msg.exec_()
                     else:
+                        # noinspection SqlDialectInspection,SqlNoDataSourceInspection
                         query = "UPDATE users SET adress = ? ,role = ? WHERE name = ? ;"
-                        val = (selected_user_address,selected_user_role,selected_username)
-                        connection.execute(query,val)
+                        val = (selected_user_address, selected_user_role, selected_username)
+                        connection.execute(query, val)
                         connection.commit()
                         connection.close()
+                        # noinspection PyAttributeOutsideInit
                         self.msg = QMessageBox()
                         self.msg.setIcon(QMessageBox.Information)
                         self.msg.setText("Updated User")

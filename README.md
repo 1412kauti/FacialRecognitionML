@@ -27,7 +27,7 @@ On **`Windows`**:<br>
 	**`Visual Studio C++ 2019`** and **`CMake`**
 
 On **`Mac`**:
-- `dlib` and `opencv` requires other packages to be installed outside **`Pycharm`**
+- `dlib` installed from the source
 
 
 ### Run
@@ -35,11 +35,10 @@ On **`Mac`**:
 After all dependencies installed the following command will run the code. 
 For successful run a camera is required, built-in or attached<br>
 
-Run the pipenv shell:
+### Run the pipenv shell:
 ```
 pipenv shell
 ```
-
 On **`Windows`**:<br>
 ```
 python starter.py
