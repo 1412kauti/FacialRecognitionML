@@ -35,6 +35,11 @@ On **`Mac`**:
 After all dependencies installed the following command will run the code. 
 For successful run a camera is required, built-in or attached<br>
 
+Run the pipenv shell:
+```
+pipenv shell
+```
+
 On **`Windows`**:<br>
 ```
 python starter.py
@@ -46,3 +51,4 @@ On **`Mac`**:
 python starter2.py
 python admin.py
 ```
+
