@@ -94,6 +94,8 @@ class Admin(QDialog):
                 # self.Camera_View.setPixmap(pixmap)
                 # noinspection PyPep8Naming
                 image_root, imageName = os.path.split(str(filePath[0]))
+                image_name = self.Name_Line.text()
+                imageName = image_name+".png"
                 # noinspection PyPep8Naming
                 imagePath = 'ImagesAttendance/'
                 shutil.copyfile(filePath[0], imagePath + imageName)
@@ -225,6 +227,9 @@ class Admin(QDialog):
                 connection.execute(query)
                 connection.commit()
                 connection.close()
+                file_name = selected_username + ".png"
+                file_path = os.path.abspath(os.getcwd()) + "/ImagesAttendance/"
+                os.remove(file_path+file_name)
                 # noinspection PyAttributeOutsideInit
                 self.msg = QMessageBox()
                 self.msg.setIcon(QMessageBox.Information)
