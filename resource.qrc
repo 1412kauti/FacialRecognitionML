@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="Themes">
+    <file>OrangeDark.qss</file>
+  </qresource>
+</RCC>
